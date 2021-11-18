@@ -32,7 +32,7 @@ Commonly this will be 16/9 in bytes, which can either be `39 8E E3 3F` or `3B 8E
 
 This should be set to your screen resolution, or the resolution you have set in-game if it is different.
 
-You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21:9")
+You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21x9")
 
 # Credits
 
