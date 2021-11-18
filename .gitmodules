@@ -1,0 +1,6 @@
+[submodule "external/Blackbone"]
+	path = external/Blackbone
+	url = https://github.com/DarthTon/Blackbone
+[submodule "external/IniReader"]
+	path = external/IniReader
+	url = https://github.com/ThirteenAG/IniReader
