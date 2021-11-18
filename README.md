@@ -36,5 +36,5 @@ You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21:
 
 # Credits
 
-- @DarthTon for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
-- @ThirteenAG for [IniReader](https://github.com/ThirteenAG/IniReader) and [UltimateASILoader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)
+- [@DarthTon](https://github.com/DarthTon) for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
+- [@ThirteenAG](https://github.com/ThirteenAG) for [IniReader](https://github.com/ThirteenAG/IniReader) and [UltimateASILoader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)
