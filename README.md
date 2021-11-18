@@ -2,6 +2,8 @@
 
 Somewhat Universal Widescreen Fix is intended to enable widescreen aspect ratios (e.g. 21:9, 32:9, 48:9) in games where it is unsupported.
 
+## WARNING IT IS NOT RECOMMENDED TO USE THIS FIX IN GAMES THAT CONTAIN ANTICHEAT
+
 # Installation
 
 Download [the latest release](https://github.com/phantomgamers/suwsf/releases/latest) and extract it so that `SUWSF.asi`, `SUWSF.ini`, and `wininet.dll` are in the same folder as the game executable that you are trying to fix.
