@@ -6,13 +6,11 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <fstream>
 
-#define DBOUT( s )            \
-{                             \
-   std::ostringstream os_;    \
-   os_ << '[' << APPNAME << "] " << s << '\n';                   \
-   OutputDebugString( os_.str().c_str() );  \
-}
+const std::string APPNAME("SUWSF");
+
+// TODO: Separate this stuff out
 
 MODULEINFO GetModuleInfo(char* szModule)
 {
@@ -35,16 +33,17 @@ std::vector<std::string> split(const std::string& s, char delim) {
 	return elems;
 }
 
-// from https://stackoverflow.com/a/3221193
-std::vector<char> StringToHex(const std::string& s)
+// modified, original from https://stackoverflow.com/a/3221193
+std::string HexFromString(const std::string& s)
 {
 	std::istringstream hex_chars_stream(s);
-	std::vector<char> bytes;
+	std::string bytes;
 
 	unsigned int c;
 	while (hex_chars_stream >> std::hex >> c)
 	{
-		bytes.push_back(c);
+		bytes += c;
 	}
 	return bytes;
 }
+
