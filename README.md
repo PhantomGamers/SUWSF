@@ -34,6 +34,11 @@ This should be set to your screen resolution, or the resolution you have set in-
 
 You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21x9")
 
+# Troubleshooting
+
+If this does not work for you, verify that a file named SUWSF*.log (where * is a date and time) is being created when you launch the game.
+If it is not, try renaming `wininet.dll` to `dsound.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
+
 # Credits
 
 - [@DarthTon](https://github.com/DarthTon) for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
