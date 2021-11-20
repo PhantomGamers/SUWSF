@@ -10,7 +10,7 @@
 
 void Init()
 {
-	DBOUT(APPNAME << " INITIALIZED.");
+	DBOUT(APPNAME << " VERSION " << VERSION << " INITIALIZED.");
 	AspectRatio::Init();
 }
 

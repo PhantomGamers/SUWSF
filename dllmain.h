@@ -9,6 +9,7 @@
 #include <fstream>
 
 const std::string APPNAME("SUWSF");
+const std::string VERSION("1.1.0");
 
 // TODO: Separate this stuff out
 
