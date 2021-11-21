@@ -39,6 +39,8 @@ You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21x
 If this does not work for you, verify that a file named SUWSF*.log (where * is a date) is being created when you launch the game.  
 If it is not, try renaming `wininet.dll` to `dsound.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
 
+If you get an error such as "Unable to load SUWSF.asi. Error:126", ensure you have the latest [64bit VC Redist installed](https://aka.ms/vs/17/release/vc_redist.x64.exe), alternatively use the [VisualCppRedist AIO](https://github.com/abbodi1406/vcredist) package which includes all versions of VC redist.
+
 # Credits
 
 - [@DarthTon](https://github.com/DarthTon) for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
