@@ -11,6 +11,7 @@
 void Init()
 {
 	SetThreadLocale(LOCALE_INVARIANT);
+	ClearLogFiles();
 	DBOUT(APPNAME << " VERSION " << VERSION << " INITIALIZED.");
 	AspectRatio::Init();
 }

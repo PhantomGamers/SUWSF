@@ -26,9 +26,14 @@ inline std::string getCurrentDateTime(std::string s) {
 };
 
 inline void Logger(std::string logMsg) {
-	std::string filePath = APPNAME + getCurrentDateTime("date") + ".log";
+	std::string filePath = APPNAME + ".log";
 	std::string now = getCurrentDateTime("now");
 	std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
 	ofs << now << '\t' << logMsg << '\n';
 	ofs.close();
+}
+
+inline void ClearLogFiles()
+{
+	remove((APPNAME + ".log").c_str());
 }
