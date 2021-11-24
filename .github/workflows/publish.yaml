@@ -42,7 +42,7 @@ jobs:
     
     - name: Build Ultimate ASI Loader
       run: |
-        premake5.bat
+        ./premake5.bat
         msbuild build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release"
       working-directory: ./external/Ultimate-ASI-Loader
 
