@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Check Tag
+      id: check-tag
+      run: |
+        if [[ ${{ github.event.ref }} =~ ^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$ ]]; then
+          echo ::set-output name=match::true
+        fi
+    - name: Fail if invalid
+      if: steps.check-tag.outputs.match == 'false'
+      uses: Actions/github-script@v3
+      with:
+        script: |
+          core.setFailed('Invalid tag')
+    
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Build for release
+      run: |
+        msbuild SUWSF/SUWSF.vcxproj
+        msbuild external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj /t:Build -p:Configuration=Release;Platform=x64;TargetName=dsound;OutDir="../../../x64/Release";GenerateDebugInformation=false
+        rm x64/Release/*.pdb
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "x64/Release/*"
+        name: "SUWSF-${{ github.event.ref }}"
+        draft: true
+    
+
+    
