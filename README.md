@@ -6,7 +6,10 @@ Somewhat Universal Widescreen Fix is intended to enable widescreen aspect ratios
 
 # Installation
 
-Download [the latest release](https://github.com/phantomgamers/suwsf/releases/latest) and extract it so that `SUWSF.asi`, `SUWSF.ini`, and `wininet.dll` are in the same folder as the game executable that you are trying to fix.
+- **Ensure you have the latest [64bit VC Redist](https://aka.ms/vs/17/release/vc_redist.x64.exe) installed.**
+- Download [the latest release](https://github.com/phantomgamers/suwsf/releases/latest)
+- Extract it so that `SUWSF.asi`, `SUWSF.ini`, and `dsound.dll` are in the same folder as the game executable that you are trying to fix.
+- If `dsound.dll` would collide with a file included in the game try a different name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) which is marked as supporting x64.
 
 Note that it must be alongside the actual game executable, it will not work if it is only placed alongside a game's launcher.
 
@@ -36,10 +39,10 @@ You can also set it to an aspect ratio in resolution format (e.g. "16x9" or "21x
 
 # Troubleshooting
 
-If this does not work for you, verify that a file named `SUWSF.log` is being created when you launch the game.  
-If it is not, try renaming `wininet.dll` to `dsound.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
-
 If you get an error such as "Unable to load SUWSF.asi. Error:126", ensure you have the latest [64bit VC Redist installed](https://aka.ms/vs/17/release/vc_redist.x64.exe), alternatively use the [VisualCppRedist AIO](https://github.com/abbodi1406/vcredist) package which includes all versions of VC redist.
+
+If this does not work for you, verify that a file named `SUWSF.log` is being created when you launch the game.  
+If it is not, try renaming `dsound.dll` to `dinput8.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
 
 # Credits
 
