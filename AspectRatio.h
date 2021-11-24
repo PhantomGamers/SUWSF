@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 class AspectRatio
 {
 public:
@@ -10,6 +11,7 @@ private:
 		std::string bytes;
 		int desiredWidth, desiredHeight;
 	};
+
 	static Config GetConfig();
 	static void Patch(Config config);
 };

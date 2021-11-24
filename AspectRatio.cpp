@@ -12,7 +12,7 @@ using namespace blackbone;
 void AspectRatio::Init()
 {
 	DBOUT("Initializing AspectRatio patch");
-	AspectRatio::Patch(AspectRatio::GetConfig());
+	Patch(GetConfig());
 }
 
 AspectRatio::Config AspectRatio::GetConfig()
@@ -21,13 +21,12 @@ AspectRatio::Config AspectRatio::GetConfig()
 	CIniReader ini(APPNAME + ".ini");
 	Config config;
 
-
 	auto byteString = ini.ReadString("AspectRatio", "TargetBytes", "39 8E E3 3F");
 	DBOUT("byteString is " << byteString);
 	auto resString = ini.ReadString("AspectRatio", "DesiredResolution", "3440x1440");
 	DBOUT("resString is " << resString);
 	std::vector<std::string> resStrings;
-	boost::split(resStrings, resString, boost::is_any_of("x"));
+	split(resStrings, resString, boost::is_any_of("x"));
 
 	config.desiredWidth = std::stoi(resStrings.at(0));
 	DBOUT("Width is " << config.desiredWidth);
@@ -44,11 +43,11 @@ AspectRatio::Config AspectRatio::GetConfig()
 void AspectRatio::Patch(Config config)
 {
 	DBOUT("Searching for bytes");
-	PatternSearch ps{ config.bytes };
+	PatternSearch ps{config.bytes};
 
 	TCHAR szFileName[MAX_PATH];
-	GetModuleFileName(NULL, szFileName, MAX_PATH);
-	MODULEINFO mInfo = GetModuleInfo((char*)szFileName);
+	GetModuleFileName(nullptr, szFileName, MAX_PATH);
+	MODULEINFO mInfo = GetModuleInfo(szFileName);
 	auto base = mInfo.lpBaseOfDll;
 	auto size = mInfo.SizeOfImage;
 
@@ -59,6 +58,6 @@ void AspectRatio::Patch(Config config)
 	for (int i = 0; i < results.size(); i++)
 	{
 		DBOUT("Writing to result " << i + 1);
-		Memory::WriteFloat(results[i], (float)config.desiredWidth / config.desiredHeight);
+		Memory::WriteFloat(results[i], static_cast<float>(config.desiredWidth) / config.desiredHeight);
 	}
 }

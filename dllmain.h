@@ -15,9 +15,9 @@ const std::string VERSION("1.2.0");
 
 MODULEINFO GetModuleInfo(char* szModule)
 {
-	MODULEINFO modinfo = { 0 };
+	MODULEINFO modinfo = {nullptr};
 	HMODULE hModule = GetModuleHandle(szModule);
-	if (hModule == 0)
+	if (hModule == nullptr)
 		return modinfo;
 	GetModuleInformation(GetCurrentProcess(), hModule, &modinfo, sizeof(MODULEINFO));
 	return modinfo;
@@ -36,4 +36,3 @@ std::string HexFromString(const std::string& s)
 	}
 	return bytes;
 }
-

@@ -18,8 +18,9 @@ inline const std::string LOG_PATH = PROGRAM_PATH + '/' + APPNAME + ".log";
    OutputDebugString( str.c_str() );  \
 }
 
-inline void Logger(std::string logMsg) {
-	std::string now = boost::posix_time::to_simple_string(boost::posix_time::second_clock::local_time());
+inline void Logger(std::string logMsg)
+{
+	std::string now = to_simple_string(boost::posix_time::second_clock::local_time());
 	std::ofstream ofs(LOG_PATH.c_str(), std::ios_base::out | std::ios_base::app);
 	ofs << now << '\t' << logMsg;
 	ofs.close();

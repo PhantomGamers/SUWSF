@@ -1,5 +1,6 @@
 #pragma once
 #include "external/Blackbone/src/BlackBone/Include/Types.h"
+
 class Memory
 {
 public:

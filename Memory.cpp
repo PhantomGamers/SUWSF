@@ -3,11 +3,11 @@
 void Memory::WriteFloat(float* address, float value)
 {
 	unsigned long OldProtection;
-	VirtualProtect((LPVOID)(address), sizeof(float), PAGE_EXECUTE_READWRITE, &OldProtection);
+	VirtualProtect(address, sizeof(float), PAGE_EXECUTE_READWRITE, &OldProtection);
 
 	*address = value;
 
-	VirtualProtect((LPVOID)(address), sizeof(float), OldProtection, _Post_ _Notnull_ NULL);
+	VirtualProtect(address, sizeof(float), OldProtection, _Post_ _Notnull_ nullptr);
 }
 
 void Memory::WriteFloat(blackbone::ptr_t address, float value)
