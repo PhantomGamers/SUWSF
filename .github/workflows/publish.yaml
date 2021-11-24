@@ -13,7 +13,7 @@ jobs:
       id: check-tag
       shell: bash
       run: |
-        if [[ ${{ github.event.ref }} =~ ^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$ ]]; then
+        if [[ ${{ github.event.ref }} =~ '^(?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)\.(?P<patch>0|[1-9]\d*)(?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$' ]]; then
           echo ::set-output name=match::true
         fi
     - name: Fail if invalid
@@ -31,8 +31,8 @@ jobs:
 
     - name: Build for release
       run: |
-        msbuild SUWSF/SUWSF.vcxproj
-        msbuild external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj /t:Build -p:Configuration=Release;Platform=x64;TargetName=dsound;OutDir="../../../x64/Release";GenerateDebugInformation=false
+        msbuild SUWSF/SUWSF.vcxproj -t:Restore
+        msbuild external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Restore -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release"
     
     - name: Prepare for release
       run: |
