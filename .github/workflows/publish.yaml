@@ -52,12 +52,12 @@ jobs:
         copy README.md x64/Release/
         copy LICENSE x64/Release/
         copy SUWSF.ini x64/Release/
+        7z a -tzip "SUWSF.zip" "x64/Release/*"
 
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
-        files: "x64/Release/*"
-        name: "SUWSF-${{ github.ref_name }}"
+        files: "SUWSF.zip"
         draft: true
     
 
