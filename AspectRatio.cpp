@@ -4,6 +4,8 @@
 #include "external/Blackbone/src/BlackBone/Patterns/PatternSearch.h"
 #include "Logging.h"
 #include "Memory.h"
+#include "boost/algorithm/string/split.hpp"
+#include "boost/algorithm/string/classification.hpp"
 
 using namespace blackbone;
 
@@ -24,7 +26,8 @@ AspectRatio::Config AspectRatio::GetConfig()
 	DBOUT("byteString is " << byteString);
 	auto resString = ini.ReadString("AspectRatio", "DesiredResolution", "3440x1440");
 	DBOUT("resString is " << resString);
-	auto resStrings = split(resString, 'x');
+	std::vector<std::string> resStrings;
+	boost::split(resStrings, resString, boost::is_any_of("x"));
 
 	config.desiredWidth = std::stoi(resStrings.at(0));
 	DBOUT("Width is " << config.desiredWidth);

@@ -2,6 +2,12 @@
 #include <string>
 #include <xiosbase>
 #include "dllmain.h"
+#include "boost/dll.hpp"
+#include "boost/date_time/gregorian/gregorian.hpp"
+#include "boost/date_time/posix_time/posix_time.hpp"
+
+inline const std::string PROGRAM_PATH = boost::dll::program_location().parent_path().string();
+inline const std::string LOG_PATH = PROGRAM_PATH + '/' + APPNAME + ".log";
 
 #define DBOUT( s )	\
 {	\
@@ -12,28 +18,14 @@
    OutputDebugString( str.c_str() );  \
 }
 
-// modified from https://stackoverflow.com/a/46866854
-inline std::string getCurrentDateTime(std::string s) {
-	time_t now = time(0);
-	struct tm tstruct;
-	char buf[26];
-	localtime_s(&tstruct, &now);
-	if (s == "now")
-		strftime(buf, sizeof(buf), "%Y-%m-%d %X", &tstruct);
-	else if (s == "date")
-		strftime(buf, sizeof(buf), "%Y-%m-%d", &tstruct);
-	return std::string(buf);
-};
-
 inline void Logger(std::string logMsg) {
-	std::string filePath = APPNAME + ".log";
-	std::string now = getCurrentDateTime("now");
-	std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
+	std::string now = boost::posix_time::to_simple_string(boost::posix_time::second_clock::local_time());
+	std::ofstream ofs(LOG_PATH.c_str(), std::ios_base::out | std::ios_base::app);
 	ofs << now << '\t' << logMsg;
 	ofs.close();
 }
 
 inline void ClearLogFiles()
 {
-	remove((APPNAME + ".log").c_str());
+	remove(LOG_PATH.c_str());
 }
