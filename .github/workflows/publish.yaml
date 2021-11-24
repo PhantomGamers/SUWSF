@@ -23,15 +23,15 @@ jobs:
         script: |
           core.setFailed('Invalid tag')
     
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1
+    - uses: microsoft/setup-msbuild@v1
 
-    - name: Checkout repo
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+
+    - uses: nuget/setup-nuget@v1
 
     - name: Build for release
       run: |
-        msbuild SUWSF/SUWSF.vcxproj -t:Restore
+        nuget restore SUWSF.sln
         msbuild SUWSF/SUWSF.vcxproj
         ./external/Ultimate-ASI-Loader/premake5.bat
         msbuild external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Restore -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release"
