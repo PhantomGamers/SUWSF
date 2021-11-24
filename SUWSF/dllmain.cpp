@@ -2,7 +2,7 @@
 #include "pch.h"
 #include <iostream>
 #include <Psapi.h>
-#include "external/IniReader/IniReader.h"
+#include "../external/IniReader/IniReader.h"
 #include <algorithm>
 #include "AspectRatio.h"
 #include "dllmain.h"
