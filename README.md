@@ -15,7 +15,7 @@ Note that it must be alongside the actual game executable, it will not work if i
 
 # Uninstall
 
-To uninstall, delete the `SUWSF.asi`, `SUWSF.ini`, and `wininet.dll` files that you extracted to the game executable location.
+To uninstall, delete the `SUWSF.asi`, `SUWSF.ini`, and `dsound.dll` files that you extracted to the game executable location.
 
 # Configuration
 
