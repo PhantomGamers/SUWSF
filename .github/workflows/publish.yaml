@@ -13,7 +13,7 @@ jobs:
       id: check-tag
       uses: actions-ecosystem/action-regex-match@v2
       with:
-        text: ${{ github.event.ref }}
+        text: ${GITHUB_REF##*/}
         regex: '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
 
     - name: Fail if invalid
@@ -47,7 +47,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: "x64/Release/*"
-        name: "SUWSF-${{ github.event.ref }}"
+        name: "SUWSF-${GITHUB_REF##*/}"
         draft: true
     
 
