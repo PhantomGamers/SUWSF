@@ -40,11 +40,14 @@ jobs:
         nuget restore SUWSF.sln
         msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64
     
-    - name: Build Ultimate ASI Loader
+    - name: Premake Ultimate ASI Loader
       run: |
         ./premake5.bat
-        msbuild build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release" -p:PlatformToolset=v142
       working-directory: ./external/Ultimate-ASI-Loader
+
+    - name: Build Ultimate ASI Loader
+      run: |
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release" -p:PlatformToolset=v142
 
     - name: Prepare for release
       run: |
