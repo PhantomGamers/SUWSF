@@ -29,6 +29,10 @@ jobs:
       with:
         submodules: true
 
+    - uses: abel0b/setup-premake@v2
+      with:
+        version: "5.0.0-beta1"
+
     - uses: nuget/setup-nuget@v1
 
     - name: Build for release
