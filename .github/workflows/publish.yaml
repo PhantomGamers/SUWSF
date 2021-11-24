@@ -26,6 +26,8 @@ jobs:
     - uses: microsoft/setup-msbuild@v1
 
     - uses: actions/checkout@v2
+      with:
+        submodules: true
 
     - uses: nuget/setup-nuget@v1
 
