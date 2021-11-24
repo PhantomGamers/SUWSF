@@ -38,7 +38,7 @@ jobs:
     - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
-        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64 /DBUILD_VERSION="${{ github.ref_name }}"
+        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64 -p:AdditionalOptions='/DBUILD_VERSION="${{ github.ref_name }}" %(AdditionalOptions)'
     
     - name: Premake Ultimate ASI Loader
       run: |
