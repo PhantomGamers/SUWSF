@@ -8,8 +8,13 @@
 #include <string>
 #include <fstream>
 
+#define STRINGIZER(arg)     #arg
+#define STR_VALUE(arg)      STRINGIZER(arg)
+#define BUILD_VERSION_STRING STR_VALUE(BUILD_VERSION)
+
 const std::string APPNAME("SUWSF");
-const std::string VERSION("1.2.0");
+
+const std::string VERSION = BUILD_VERSION_STRING;
 
 // TODO: Separate this stuff out
 
