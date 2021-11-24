@@ -29,7 +29,7 @@ inline void Logger(std::string logMsg) {
 	std::string filePath = APPNAME + ".log";
 	std::string now = getCurrentDateTime("now");
 	std::ofstream ofs(filePath.c_str(), std::ios_base::out | std::ios_base::app);
-	ofs << now << '\t' << logMsg << '\n';
+	ofs << now << '\t' << logMsg;
 	ofs.close();
 }
 
