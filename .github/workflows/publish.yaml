@@ -38,7 +38,7 @@ jobs:
     - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
-        msbuild SUWSF/SUWSF.vcxproj -p:Configuration=Release -p:Platform=x64
+        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64
     
     - name: Build Ultimate ASI Loader
       run: |
@@ -52,7 +52,7 @@ jobs:
         copy README.md x64/Release/
         copy LICENSE x64/Release/
         copy SUWSF.ini x64/Release/
-        7z a -tzip "SUWSF.zip" "x64/Release/*"
+        7z a -tzip "SUWSF.zip" "./x64/Release/*"
 
     - name: Create release
       uses: softprops/action-gh-release@v1
