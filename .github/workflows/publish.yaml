@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
     - name: Check Tag
       id: check-tag
@@ -24,6 +24,8 @@ jobs:
           core.setFailed('Invalid tag')
     
     - uses: microsoft/setup-msbuild@v1
+      with:
+        vs-prerelease: true
 
     - uses: abel0b/setup-premake@v2
       with:
