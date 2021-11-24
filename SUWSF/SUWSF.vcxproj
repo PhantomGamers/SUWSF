@@ -24,6 +24,7 @@
     <ProjectGuid>{c38f8446-5545-4884-8bf2-696d0c6e2df1}</ProjectGuid>
     <RootNamespace>SUWSF</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <BuildVersion Condition="'$(BuildVersion)' == ''">UNRELEASED</BuildVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -172,7 +173,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <BUILDVERSION>UNRELEASED</BUILDVERSION>
+      <BUILDVERSION>$(BuildVersion)</BUILDVERSION>
       <AdditionalOptions>/DBUILD_VERSION="%(BUILDVERSION)" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -181,7 +182,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <ImportLibrary>%tmp%/$(AssemblyName)</ImportLibrary>
+      <ImportLibrary>$(tmp)/$(AssemblyName)</ImportLibrary>
       <AdditionalOptions>/NOIMPLIB %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
