@@ -45,3 +45,4 @@ If you get an error such as "Unable to load SUWSF.asi. Error:126", ensure you ha
 
 - [@DarthTon](https://github.com/DarthTon) for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
 - [@ThirteenAG](https://github.com/ThirteenAG) for [IniReader](https://github.com/ThirteenAG/IniReader) and [UltimateASILoader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)
+- [@sergey-shandar](https://github.com/sergey-shandar) for [getboost](https://github.com/sergey-shandar/getboost)
