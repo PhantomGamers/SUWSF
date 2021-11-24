@@ -25,23 +25,27 @@ jobs:
     
     - uses: microsoft/setup-msbuild@v1
 
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-
     - uses: abel0b/setup-premake@v2
       with:
         version: "5.0.0-beta1"
 
     - uses: nuget/setup-nuget@v1
 
-    - name: Build for release
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
         msbuild SUWSF/SUWSF.vcxproj
-        ./external/Ultimate-ASI-Loader/premake5.bat
-        msbuild external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Restore -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release"
     
+    - name: Build Ultimate ASI Loader
+      run: |
+        premake5.bat
+        msbuild build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release"
+      working-directory: ./external/Ultimate-ASI-Loader
+
     - name: Prepare for release
       run: |
         rm x64/Release/*.pdb
