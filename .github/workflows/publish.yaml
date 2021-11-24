@@ -38,7 +38,7 @@ jobs:
     - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
-        msbuild SUWSF/SUWSF.vcxproj
+        msbuild SUWSF/SUWSF.vcxproj -p:Configuration=Release -p:Platform=x64
     
     - name: Build Ultimate ASI Loader
       run: |
