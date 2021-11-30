@@ -10,8 +10,8 @@ private:
 	{
 		std::string bytes;
 		int desiredWidth, desiredHeight;
+		bool enabled = false;
 	};
-
 	static Config GetConfig();
 	static void Patch(Config config);
 };

@@ -7,13 +7,21 @@
 #include "AspectRatio.h"
 #include "dllmain.h"
 #include "Logging.h"
+#include "UserSettings.h"
+#include "GenericPatch.h"
 
 void Init()
 {
 	SetThreadLocale(LOCALE_INVARIANT);
 	ClearLogFiles();
 	DBOUT(APPNAME << " VERSION " << VERSION << " INITIALIZED.");
+
+	GetModuleFileName(nullptr, szFileName, MAX_PATH);
+	mInfo = GetModuleInfo(szFileName);
+
+	UserSettings::Init();
 	AspectRatio::Init();
+	GenericPatch::Init();
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,

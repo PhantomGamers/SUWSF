@@ -13,8 +13,12 @@
 #define BUILD_VERSION_STRING STR_VALUE(BUILD_VERSION)
 
 const std::string APPNAME("SUWSF");
+const std::string ININAME(APPNAME + ".ini");
 
 const std::string VERSION = BUILD_VERSION_STRING;
+
+TCHAR szFileName[MAX_PATH];
+MODULEINFO mInfo;
 
 // TODO: Separate this stuff out
 
