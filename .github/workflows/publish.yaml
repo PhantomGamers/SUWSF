@@ -52,15 +52,15 @@ jobs:
       run: "if (-not (Test-Path env:DXSDK_DIR)) \n{\nStart-FileDownload 'https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe' -FileName 'C:\\DXSDK_Jun10.exe'\nStart-FileDownload 'https://raw.githubusercontent.com/chocolatey/choco/master/src/chocolatey.resources/redirects/RefreshEnv.cmd' -FileName 'C:\\RefreshEnv.cmd'\nStart-Process \"C:\\DXSDK_Jun10.exe\" \"/F /S /O /U\" -NoNewWindow -Wait\nC:\\RefreshEnv.cmd\n}"
 
     - name: Build Ultimate ASI Loader x64
-      if: ${{ matrix.platform == x64 }}
+      if: ${{ matrix.platform == 'x64' }}
       run: |
         msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.sln -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
 
     - name: Build Ultimate ASI Loader x86
-      if: ${{ matrix.platform == x86 }}
+      if: ${{ matrix.platform == 'x86' }}
       run: |
         msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.sln -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
-        
+
     - name: Prepare for release
       run: |
         rm ${{ matrix.platform }}/Release/*.pdb
