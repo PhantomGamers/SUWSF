@@ -14,7 +14,7 @@ void Init()
 {
 	SetThreadLocale(LOCALE_INVARIANT);
 	ClearLogFiles();
-	DBOUT(APPNAME << " VERSION " << VERSION << " INITIALIZED.");
+	DBOUT(APPNAME << VERSION << " INITIALIZED.");
 
 	GetModuleFileName(nullptr, szFileName, MAX_PATH);
 	mInfo = GetModuleInfo(szFileName);
