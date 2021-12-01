@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [ Win32, x64 ]
     steps:
     - name: Check Tag
       id: check-tag
@@ -38,7 +41,7 @@ jobs:
     - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
-        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64 -p:BUILDVERSION="${{ github.ref_name }}"
+        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:BUILDVERSION="${{ github.ref_name }}"
     
     - name: Premake Ultimate ASI Loader
       run: |
@@ -47,20 +50,20 @@ jobs:
 
     - name: Build Ultimate ASI Loader
       run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release" -p:PlatformToolset=v142
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -t:Build -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
 
     - name: Prepare for release
       run: |
-        rm x64/Release/*.pdb
-        copy README.md x64/Release/
-        copy LICENSE x64/Release/
-        copy SUWSF.ini x64/Release/
-        7z a -tzip "SUWSF.zip" "./x64/Release/*"
+        rm ${{ matrix.platform }}/Release/*.pdb
+        copy README.md ${{ matrix.platform }}/Release/
+        copy LICENSE ${{ matrix.platform }}/Release/
+        copy SUWSF.ini ${{ matrix.platform }}/Release/
+        7z a -tzip "SUWSF.zip" "./${{ matrix.platform }}/Release/*"
 
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
-        files: "SUWSF.zip"
+        files: "SUWSF-${{ matrix.platform }}.zip"
         draft: true
     
 
