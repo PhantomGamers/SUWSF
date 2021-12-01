@@ -86,6 +86,11 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 					goto CONTINUE;
 				}
 			}
+			else if (params.first == "Match")
+			{
+				boost::erase_all(params.second, "\"");
+				config.matches = params.second;
+			}
 			else if (params.first == "Enabled")
 			{
 				try
@@ -161,11 +166,48 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 
 		DBOUT("Found " << matchesFound << " matches");
 
-		for (int i = 0; i < results.size(); i++)
+		if (matchesFound == 0)
 		{
-			auto value = reinterpret_cast<BYTE*>(const_cast<char*>(config.val.c_str()));
-			DBOUT("Writing " << value << " with length " << config.val.length() << " to result " << i + 1);
-			Memory::Write(results[i] + config.offset, value, config.val.length());
+			continue;
+		}
+
+		auto value = reinterpret_cast<BYTE*>(const_cast<char*>(config.val.c_str()));
+		if (config.matches == "all")
+		{
+			for (int i = 0; i < results.size(); i++)
+			{
+				DBOUT("Writing " << value << " with length " << config.val.length() << " to result " << i + 1);
+				Memory::Write(results[i] + config.offset, value, config.val.length());
+			}
+		}
+		else
+		{
+			int match = -1;
+			if (config.matches == "last" || config.matches == "end")
+			{
+				match = matchesFound;
+			}
+			else
+			{
+				try
+				{
+					match = std::stoi(config.matches);
+				}
+				catch (std::exception const& e)
+				{
+					DBOUT("Could not parse match number as integer, skipping...");
+					continue;
+				}
+			}
+
+			if (match < 1 || match > matchesFound)
+			{
+				DBOUT("Match setting invalid, must resolve to a value between 1 and " << matchesFound);
+				continue;
+			}
+
+			DBOUT("Writing " << value << " with length " << config.val.length() << " to match " << match);
+			Memory::Write(results[match - 1] + config.offset, value, config.val.length());
 		}
 	}
 }

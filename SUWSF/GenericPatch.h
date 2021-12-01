@@ -9,11 +9,12 @@ public:
 private:
 	struct Config
 	{
-		std::string pattern;
+		std::string pattern = "";
 		int offset = 0;
-		std::string val;
+		std::string val = "";
 		std::string valType = "float";
 		std::string wildcardChar = "CC";
+		std::string matches = "all";
 		bool wildcardEnabled = false;
 	};
 	static std::vector<Config> GetConfigs();
