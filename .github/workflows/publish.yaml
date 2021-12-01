@@ -54,12 +54,12 @@ jobs:
     - name: Build Ultimate ASI Loader x64
       if: ${{ matrix.platform == 'x64' }}
       run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.sln -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
 
     - name: Build Ultimate ASI Loader x86
       if: ${{ matrix.platform == 'x86' }}
       run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.sln -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
 
     - name: Prepare for release
       run: |
