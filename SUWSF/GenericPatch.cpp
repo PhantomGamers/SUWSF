@@ -7,6 +7,7 @@
 #include "../external/Blackbone/src/BlackBone/Patterns/PatternSearch.h"
 #include "UserSettings.h"
 #include <string>
+#include "../external/tinyexpr/tinyexpr.h"
 
 using namespace blackbone;
 
@@ -119,7 +120,15 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				boost::replace_all(config.val, "width", std::to_string(UserSettings::config.width));
 				boost::replace_all(config.val, "height", std::to_string(UserSettings::config.height));
 				boost::replace_all(config.val, "aspectratio", std::to_string(UserSettings::config.aspectratio));
-				float f = std::stof(config.val);
+				int error = -1;
+				float f = te_interp(config.val.c_str(), &error);
+
+				if (error != 0)
+				{
+					DBOUT("Could not interpret value expression, skipping patch...");
+					goto CONTINUE;
+				}
+
 				config.val = reinterpret_cast<char*>(reinterpret_cast<BYTE*>(&f));
 				while (config.val.size() > 4)
 				{

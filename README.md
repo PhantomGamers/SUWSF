@@ -49,3 +49,4 @@ If it is not, try renaming `dsound.dll` to `dinput8.dll` or any other name on [t
 - [@DarthTon](https://github.com/DarthTon) for the Windows memory hacking library [Blackbone](https://github.com/DarthTon/Blackbone)
 - [@ThirteenAG](https://github.com/ThirteenAG) for [IniReader](https://github.com/ThirteenAG/IniReader) and [UltimateASILoader](https://github.com/ThirteenAG/Ultimate-ASI-Loader)
 - [@sergey-shandar](https://github.com/sergey-shandar) for [getboost](https://github.com/sergey-shandar/getboost)
+- [@codeplea](https://github.com/codeplea) for [tinyexpr](https://github.com/codeplea/tinyexpr)

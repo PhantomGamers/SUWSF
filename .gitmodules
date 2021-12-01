@@ -7,3 +7,6 @@
 [submodule "external/Ultimate-ASI-Loader"]
 	path = external/Ultimate-ASI-Loader
 	url = https://github.com/ThirteenAG/Ultimate-ASI-Loader
+[submodule "external/tinyexpr"]
+	path = external/tinyexpr
+	url = https://github.com/codeplea/tinyexpr

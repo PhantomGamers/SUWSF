@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;SUWSF_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -193,6 +193,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\external\tinyexpr\tinyexpr.h" />
     <ClInclude Include="AspectRatio.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="dllmain.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="UserSettings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\tinyexpr\tinyexpr.c" />
     <ClCompile Include="AspectRatio.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="GenericPatch.cpp" />
