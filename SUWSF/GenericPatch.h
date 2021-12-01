@@ -11,7 +11,7 @@ private:
 	{
 		std::string pattern;
 		int offset = 0;
-		float val;
+		std::string val;
 		std::string valType = "float";
 		std::string wildcardChar = "CC";
 		bool wildcardEnabled = false;

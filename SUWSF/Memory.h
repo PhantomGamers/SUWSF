@@ -4,6 +4,7 @@
 class Memory
 {
 public:
-	static void WriteFloat(float* address, float value);
+	static void Write(BYTE* address, BYTE* bytes, int num);
 	static void WriteFloat(blackbone::ptr_t address, float value);
+	static void Write(blackbone::ptr_t address, BYTE* bytes, int num);
 };
