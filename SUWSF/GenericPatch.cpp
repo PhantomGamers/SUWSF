@@ -121,7 +121,10 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				boost::replace_all(config.val, "aspectratio", std::to_string(UserSettings::config.aspectratio));
 				float f = std::stof(config.val);
 				config.val = reinterpret_cast<char*>(reinterpret_cast<BYTE*>(&f));
-				config.val.pop_back(); // remove string terminator
+				while (config.val.size() > 4)
+				{
+					config.val.pop_back();
+				}
 			}
 			catch (std::exception const& e)
 			{
