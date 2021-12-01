@@ -24,7 +24,7 @@ MODULEINFO mInfo;
 
 MODULEINFO GetModuleInfo(char* szModule)
 {
-	MODULEINFO modinfo = {nullptr};
+	MODULEINFO modinfo = { nullptr };
 	HMODULE hModule = GetModuleHandle(szModule);
 	if (hModule == nullptr)
 		return modinfo;

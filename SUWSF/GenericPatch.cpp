@@ -23,7 +23,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 	DBOUT("Searching for patches...");
 
 	std::vector<Config> configs;
-	for (auto &entry : ini.data)
+	for (auto& entry : ini.data)
 	{
 		if (entry.first.find("Patch") == std::string::npos)
 			continue;
@@ -151,7 +151,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 
 void GenericPatch::PatchAll(std::vector<Config> configs)
 {
-	for (auto &config : configs)
+	for (auto& config : configs)
 	{
 		DBOUT("Searching for bytes " << config.pattern);
 		PatternSearch ps{ config.pattern };
