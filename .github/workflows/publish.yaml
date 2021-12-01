@@ -49,7 +49,7 @@ jobs:
       working-directory: ./external/Ultimate-ASI-Loader
 
     - name: Setup DXSDK
-      run: "if (-not (Test-Path env:DXSDK_DIR)) \n{\nStart-FileDownload 'https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe' -FileName 'C:\\DXSDK_Jun10.exe'\nStart-FileDownload 'https://raw.githubusercontent.com/chocolatey/choco/master/src/chocolatey.resources/redirects/RefreshEnv.cmd' -FileName 'C:\\RefreshEnv.cmd'\nStart-Process \"C:\\DXSDK_Jun10.exe\" \"/F /S /O /U\" -NoNewWindow -Wait\nC:\\RefreshEnv.cmd\n}"
+      run: "$wc = New-Object System.Net.WebClient \nif (-not (Test-Path env:DXSDK_DIR)) \n{\n$wc.DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', 'C:\\DXSDK_Jun10.exe')\n$wc.DownloadFile('https://raw.githubusercontent.com/chocolatey/choco/master/src/chocolatey.resources/redirects/RefreshEnv.cmd', 'C:\\RefreshEnv.cmd')\nStart-Process \"C:\\DXSDK_Jun10.exe\" \"/F /S /O /U\" -NoNewWindow -Wait\nC:\\RefreshEnv.cmd\n}"
 
     - name: Build Ultimate ASI Loader x64
       if: ${{ matrix.platform == 'x64' }}
