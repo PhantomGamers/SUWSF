@@ -58,7 +58,7 @@ jobs:
         copy README.md ${{ matrix.platform }}/Release/
         copy LICENSE ${{ matrix.platform }}/Release/
         copy SUWSF.ini ${{ matrix.platform }}/Release/
-        7z a -tzip "SUWSF.zip" "./${{ matrix.platform }}/Release/*"
+        7z a -tzip "SUWSF-${{ matrix.platform }}.zip" "./${{ matrix.platform }}/Release/*"
 
     - name: Create release
       uses: softprops/action-gh-release@v1
