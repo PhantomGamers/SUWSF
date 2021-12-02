@@ -22,6 +22,17 @@ To uninstall, delete the `SUWSF.asi`, `SUWSF.ini`, and `dsound.dll` files that y
 
 In `SUWSF.ini` you can configure the following settings:  
 
+### **[UserSettings]**
+
+A group of settings specific to the user.
+
+#### **Resolution**
+
+The user's screen resolution that should be used in patch calculations.  
+
+Valid options: A screen resolution (e.g. "3440x1440"), "auto" (automatically detect from primary screen, may be affected by DPI scaling)  
+Default: "auto"  
+
 ### **[Patch]**
 
 A group of settings related to a patch. Patches can optionally have names (e.g. `[Patch:AspectRatio]` or `[Patch:FOV]`). Names do not matter as long as they contain the word `Patch`.  
