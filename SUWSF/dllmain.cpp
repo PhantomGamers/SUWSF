@@ -4,7 +4,6 @@
 #include <Psapi.h>
 #include "../external/IniReader/IniReader.h"
 #include <algorithm>
-#include "AspectRatio.h"
 #include "dllmain.h"
 #include "Logging.h"
 #include "UserSettings.h"
@@ -20,13 +19,12 @@ void Init()
 	mInfo = GetModuleInfo(szFileName);
 
 	UserSettings::Init();
-	AspectRatio::Init();
 	GenericPatch::Init();
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
-                      DWORD ul_reason_for_call,
-                      LPVOID lpReserved
+	DWORD ul_reason_for_call,
+	LPVOID lpReserved
 )
 {
 	switch (ul_reason_for_call)

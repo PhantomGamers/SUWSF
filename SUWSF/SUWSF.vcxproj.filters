@@ -24,9 +24,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AspectRatio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dllmain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,15 +42,15 @@
     <ClInclude Include="..\external\tinyexpr\tinyexpr.h">
       <Filter>External Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\external\Hooking.Patterns\Hooking.Patterns.h">
+      <Filter>External Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AspectRatio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cpp">
@@ -66,6 +63,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\external\tinyexpr\tinyexpr.c">
+      <Filter>External Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\external\Hooking.Patterns\Hooking.Patterns.cpp">
       <Filter>External Files</Filter>
     </ClCompile>
   </ItemGroup>

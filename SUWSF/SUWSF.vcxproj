@@ -193,8 +193,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\external\Hooking.Patterns\Hooking.Patterns.h" />
     <ClInclude Include="..\external\tinyexpr\tinyexpr.h" />
-    <ClInclude Include="AspectRatio.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="GenericPatch.h" />
@@ -204,8 +204,8 @@
     <ClInclude Include="UserSettings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\external\Hooking.Patterns\Hooking.Patterns.cpp" />
     <ClCompile Include="..\external\tinyexpr\tinyexpr.c" />
-    <ClCompile Include="AspectRatio.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="GenericPatch.cpp" />
     <ClCompile Include="Memory.cpp" />
@@ -216,16 +216,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="UserSettings.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\external\Blackbone\src\BlackBone\BlackBone.vcxproj">
-      <Project>{a2c53563-46f5-4d87-903f-3f1f2fdb2deb}</Project>
-      <Private>false</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

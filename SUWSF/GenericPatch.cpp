@@ -4,12 +4,10 @@
 #include "Logging.h"
 #include "boost/algorithm/string/replace.hpp"
 #include "Memory.h"
-#include "../external/Blackbone/src/BlackBone/Patterns/PatternSearch.h"
 #include "UserSettings.h"
 #include <string>
 #include "../external/tinyexpr/tinyexpr.h"
-
-using namespace blackbone;
+#include "../external/Hooking.Patterns/Hooking.Patterns.h"
 
 void GenericPatch::Init()
 {
@@ -39,10 +37,8 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			{
 				DBOUT("Found pattern param with value " << params.second);
 				config.pattern = params.second;
-				config.wildcardEnabled = config.pattern.find("??") != std::string::npos;
-				boost::replace_all(config.pattern, "??", config.wildcardChar);
+				boost::replace_all(config.pattern, "??", "?");
 				boost::erase_all(config.pattern, "\"");
-				config.pattern = HexFromString(config.pattern);
 			}
 			else if (params.first == "Offset")
 			{
@@ -75,15 +71,6 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				if (config.valType != "float" && config.valType != "byte")
 				{
 					DBOUT("ValueType unsupported. Supported types are: float, byte");
-					goto CONTINUE;
-				}
-			}
-			else if (params.first == "WildcardChar")
-			{
-				config.wildcardChar = HexFromString(params.second);
-				if (config.wildcardChar.length() != 1)
-				{
-					DBOUT("Wildcard is not valid, should be one byte, skipping patch...");
 					goto CONTINUE;
 				}
 			}
@@ -163,22 +150,10 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 	for (auto& config : configs)
 	{
 		DBOUT("Searching for bytes " << config.pattern);
-		PatternSearch ps{ config.pattern };
+		auto pattern = hook::pattern((uintptr_t)mInfo.lpBaseOfDll, (uintptr_t)mInfo.lpBaseOfDll + mInfo.SizeOfImage, config.pattern);
+		DBOUT("Found " << pattern.size() << " matches");
 
-		std::vector<ptr_t> results;
-		size_t matchesFound = 0;
-		if (config.wildcardEnabled)
-		{
-			matchesFound = ps.Search(reinterpret_cast<const uint8_t>(&config.wildcardChar[0]), mInfo.lpBaseOfDll, mInfo.SizeOfImage, results);
-		}
-		else
-		{
-			matchesFound = ps.Search(mInfo.lpBaseOfDll, mInfo.SizeOfImage, results);
-		}
-
-		DBOUT("Found " << matchesFound << " matches");
-
-		if (matchesFound == 0)
+		if (pattern.size() == 0)
 		{
 			continue;
 		}
@@ -186,10 +161,10 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 		auto value = reinterpret_cast<BYTE*>(const_cast<char*>(config.val.c_str()));
 		if (config.matches == "all")
 		{
-			for (int i = 0; i < results.size(); i++)
+			for (int i = 0; i < pattern.size(); i++)
 			{
-				DBOUT("Writing " << value << " with length " << config.val.length() << " to result " << i + 1);
-				Memory::Write(results[i] + config.offset, value, config.val.length());
+				DBOUT("Writing " << hexStr(value, config.val.length()) << " with length " << config.val.length() << " to result " << i + 1);
+				Memory::Write(pattern.get(i).get<BYTE>(config.offset), value, config.val.length());
 			}
 		}
 		else
@@ -197,7 +172,7 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 			int match = -1;
 			if (config.matches == "last" || config.matches == "end")
 			{
-				match = matchesFound;
+				match = pattern.size();
 			}
 			else
 			{
@@ -212,14 +187,14 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 				}
 			}
 
-			if (match < 1 || match > matchesFound)
+			if (match < 1 || match > pattern.size())
 			{
-				DBOUT("Match setting invalid, must resolve to a value between 1 and " << matchesFound);
+				DBOUT("Match setting invalid, must resolve to a value between 1 and " << pattern.size());
 				continue;
 			}
 
-			DBOUT("Writing " << value << " with length " << config.val.length() << " to match " << match);
-			Memory::Write(results[match - 1] + config.offset, value, config.val.length());
+			DBOUT("Writing " << hexStr(value, config.val.length()) << " with length " << config.val.length() << " to match " << match);
+			Memory::Write(pattern.get(match - 1).get<BYTE>(config.offset), value, config.val.length());
 		}
 	}
 }

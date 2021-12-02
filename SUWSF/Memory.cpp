@@ -1,4 +1,5 @@
 #include "Memory.h"
+#include <Windows.h>
 
 void Memory::Write(BYTE* address, BYTE* bytes, int num)
 {
@@ -9,14 +10,4 @@ void Memory::Write(BYTE* address, BYTE* bytes, int num)
 		*(address + i) = *(bytes + i);
 	}
 	VirtualProtect(address, num, OldProtection, _Post_ _Notnull_ nullptr);
-}
-
-void Memory::Write(blackbone::ptr_t address, BYTE* bytes, int num)
-{
-	Write(reinterpret_cast<BYTE*>(address), bytes, num);
-}
-
-void Memory::WriteFloat(blackbone::ptr_t address, float value)
-{
-	Write(reinterpret_cast<BYTE*>(address), reinterpret_cast<BYTE*>(&value), sizeof(float));
 }

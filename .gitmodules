@@ -1,6 +1,3 @@
-[submodule "external/Blackbone"]
-	path = external/Blackbone
-	url = https://github.com/DarthTon/Blackbone
 [submodule "external/IniReader"]
 	path = external/IniReader
 	url = https://github.com/ThirteenAG/IniReader
@@ -10,3 +7,6 @@
 [submodule "external/tinyexpr"]
 	path = external/tinyexpr
 	url = https://github.com/codeplea/tinyexpr
+[submodule "external/Hooking.Patterns"]
+	path = external/Hooking.Patterns
+	url = https://github.com/ThirteenAG/Hooking.Patterns
