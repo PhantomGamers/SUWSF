@@ -33,12 +33,12 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 
 		for (auto& params : entry.second)
 		{
+			boost::erase_all(params.second, "\"");
 			if (params.first == "Pattern")
 			{
 				DBOUT("Found pattern param with value " << params.second);
 				config.pattern = params.second;
 				boost::replace_all(config.pattern, "??", "?");
-				boost::erase_all(config.pattern, "\"");
 			}
 			else if (params.first == "Offset")
 			{
@@ -60,13 +60,11 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			else if (params.first == "Value")
 			{
 				DBOUT("Found value param with value " << params.second);
-				boost::erase_all(params.second, "\"");
 				config.val = params.second;
 			}
 			else if (params.first == "ValueType")
 			{
 				DBOUT("Found ValueType param with value " << params.second);
-				boost::erase_all(params.second, "\"");
 				config.valType = params.second;
 				if (config.valType != "float" && config.valType != "byte")
 				{
@@ -76,21 +74,14 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			}
 			else if (params.first == "Match")
 			{
-				boost::erase_all(params.second, "\"");
 				config.matches = params.second;
 			}
 			else if (params.first == "Enabled")
 			{
-				try
+				DBOUT("Enabled param found with value " << params.second);
+				if (params.second != "true")
 				{
-					if (!boost::lexical_cast<bool>(params.second))
-					{
-						goto CONTINUE;
-					}
-				}
-				catch (boost::bad_lexical_cast const& e)
-				{
-					DBOUT("Could not parse Enabled param, skipping patch...");
+					DBOUT("Patch not enabled, skipping...");
 					goto CONTINUE;
 				}
 			}
