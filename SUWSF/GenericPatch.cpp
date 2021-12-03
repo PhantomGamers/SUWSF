@@ -52,9 +52,10 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 					DBOUT("Offset is not an integer, skipping patch...");
 					goto CONTINUE;
 				}
-				if (config.offset < 0 || (config.pattern.length() - config.offset) < 4)
+				if (config.offset < 0)
 				{
-					DBOUT("Offset invalid, should be between 0 and " << (config.pattern.length() - 4));
+					DBOUT("Offset invalid, must be greater than or equal to 0");
+					goto CONTINUE;
 				}
 			}
 			else if (params.first == "Value")
