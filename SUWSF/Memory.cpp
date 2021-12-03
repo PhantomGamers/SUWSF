@@ -1,16 +1,13 @@
 #include "Memory.h"
+#include <Windows.h>
 
-void Memory::WriteFloat(float* address, float value)
+void Memory::Write(BYTE* address, BYTE* bytes, int num)
 {
 	unsigned long OldProtection;
-	VirtualProtect(address, sizeof(float), PAGE_EXECUTE_READWRITE, &OldProtection);
-
-	*address = value;
-
-	VirtualProtect(address, sizeof(float), OldProtection, _Post_ _Notnull_ nullptr);
-}
-
-void Memory::WriteFloat(blackbone::ptr_t address, float value)
-{
-	WriteFloat(reinterpret_cast<float*>(address), value);
+	VirtualProtect(address, num, PAGE_EXECUTE_READWRITE, &OldProtection);
+	for (int i = 0; i < num; i++)
+	{
+		*(address + i) = *(bytes + i);
+	}
+	VirtualProtect(address, num, OldProtection, _Post_ _Notnull_ nullptr);
 }

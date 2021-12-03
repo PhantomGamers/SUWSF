@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        platform: [ x86, x64 ]
     steps:
     - name: Check Tag
       id: check-tag
@@ -33,34 +36,43 @@ jobs:
 
     - uses: actions/checkout@v2
       with:
-        submodules: true
+        submodules: 'recursive'
 
     - name: Build SUWSF
       run: |
         nuget restore SUWSF.sln
-        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=x64 -p:BUILDVERSION="${{ github.ref_name }}"
+        msbuild SUWSF.sln -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:BUILDVERSION="${{ github.ref_name }}"
     
     - name: Premake Ultimate ASI Loader
       run: |
         ./premake5.bat
       working-directory: ./external/Ultimate-ASI-Loader
 
-    - name: Build Ultimate ASI Loader
+    - name: Setup DXSDK
+      run: "$wc = New-Object System.Net.WebClient \nif (-not (Test-Path env:DXSDK_DIR)) \n{\n$wc.DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', 'C:\\DXSDK_Jun10.exe')\n$wc.DownloadFile('https://raw.githubusercontent.com/chocolatey/choco/master/src/chocolatey.resources/redirects/RefreshEnv.cmd', 'C:\\RefreshEnv.cmd')\nStart-Process \"C:\\DXSDK_Jun10.exe\" \"/F /S /O /U\" -NoNewWindow -Wait\nC:\\RefreshEnv.cmd\n}"
+
+    - name: Build Ultimate ASI Loader x64
+      if: ${{ matrix.platform == 'x64' }}
       run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-x64.vcxproj -t:Build -p:Configuration=Release -p:Platform=x64 -p:TargetName=dsound -p:OutDir="../../../x64/Release" -p:PlatformToolset=v142
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
+
+    - name: Build Ultimate ASI Loader x86
+      if: ${{ matrix.platform == 'x86' }}
+      run: |
+        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
 
     - name: Prepare for release
       run: |
-        rm x64/Release/*.pdb
-        copy README.md x64/Release/
-        copy LICENSE x64/Release/
-        copy SUWSF.ini x64/Release/
-        7z a -tzip "SUWSF.zip" "./x64/Release/*"
+        rm ${{ matrix.platform }}/Release/*.pdb
+        copy README.md ${{ matrix.platform }}/Release/
+        copy LICENSE ${{ matrix.platform }}/Release/
+        copy SUWSF.ini ${{ matrix.platform }}/Release/
+        7z a -tzip "SUWSF-${{ matrix.platform }}.zip" "./${{ matrix.platform }}/Release/*"
 
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
-        files: "SUWSF.zip"
+        files: "SUWSF-${{ matrix.platform }}.zip"
         draft: true
     
 

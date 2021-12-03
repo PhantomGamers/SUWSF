@@ -18,9 +18,17 @@ void AspectRatio::Init()
 AspectRatio::Config AspectRatio::GetConfig()
 {
 	DBOUT("Getting AspectRatio config");
-	CIniReader ini(APPNAME + ".ini");
+	CIniReader ini(ININAME);
 	Config config;
 
+	config.enabled = ini.ReadBoolean("AspectRatio", "Enabled", false);
+	if (!config.enabled)
+	{
+		DBOUT("AspectRatio patch disabled, skipping...");
+		return config;
+	}
+
+	DBOUT("AspectRatio patch is deprecated and will be removed in a future release");
 	auto byteString = ini.ReadString("AspectRatio", "TargetBytes", "39 8E E3 3F");
 	DBOUT("byteString is " << byteString);
 	auto resString = ini.ReadString("AspectRatio", "DesiredResolution", "3440x1440");
@@ -42,17 +50,14 @@ AspectRatio::Config AspectRatio::GetConfig()
 
 void AspectRatio::Patch(Config config)
 {
+	if (!config.enabled)
+		return;
+
 	DBOUT("Searching for bytes");
 	PatternSearch ps{config.bytes};
 
-	TCHAR szFileName[MAX_PATH];
-	GetModuleFileName(nullptr, szFileName, MAX_PATH);
-	MODULEINFO mInfo = GetModuleInfo(szFileName);
-	auto base = mInfo.lpBaseOfDll;
-	auto size = mInfo.SizeOfImage;
-
 	std::vector<ptr_t> results;
-	auto matchesFound = ps.Search(base, size, results);
+	auto matchesFound = ps.Search(mInfo.lpBaseOfDll, mInfo.SizeOfImage, results);
 	DBOUT("Found " << matchesFound << " matches");
 
 	for (int i = 0; i < results.size(); i++)
