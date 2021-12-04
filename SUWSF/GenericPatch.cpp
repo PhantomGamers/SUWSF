@@ -27,7 +27,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 		if (entry.first.find("Patch") == std::string::npos)
 			continue;
 
-		DBOUT("Found a patch!");
+		DBOUT("Found patch " << entry.first);
 
 		Config config;
 
@@ -36,13 +36,13 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			boost::erase_all(params.second, "\"");
 			if (params.first == "Pattern")
 			{
-				DBOUT("Found pattern param with value " << params.second);
+				DBOUT("Pattern=" << params.second);
 				config.pattern = params.second;
 				boost::replace_all(config.pattern, "??", "?");
 			}
 			else if (params.first == "Offset")
 			{
-				DBOUT("Found offset param with value " << params.second);
+				DBOUT("Offset= " << params.second);
 				try
 				{
 					config.offset = std::stoi(params.second);
@@ -54,27 +54,28 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				}
 				if (config.offset < 0)
 				{
-					DBOUT("Offset invalid, must be greater than or equal to 0");
+					DBOUT("Offset invalid, must be greater than or equal to 0. Skipping patch...");
 					goto CONTINUE;
 				}
 			}
 			else if (params.first == "Value")
 			{
-				DBOUT("Found value param with value " << params.second);
+				DBOUT("Value=" << params.second);
 				config.val = params.second;
 			}
 			else if (params.first == "ValueType")
 			{
-				DBOUT("Found ValueType param with value " << params.second);
+				DBOUT("ValueType=" << params.second);
 				config.valType = params.second;
 				if (config.valType != "float" && config.valType != "byte")
 				{
-					DBOUT("ValueType unsupported. Supported types are: float, byte");
+					DBOUT("ValueType unsupported. Supported types are: float, byte...Skipping patch...");
 					goto CONTINUE;
 				}
 			}
 			else if (params.first == "Match")
 			{
+				DBOUT("Match=" << params.second);
 				config.matches = params.second;
 			}
 			else if (params.first == "Enabled")
@@ -82,7 +83,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				DBOUT("Enabled param found with value " << params.second);
 				if (params.second != "true")
 				{
-					DBOUT("Patch not enabled, skipping...");
+					DBOUT("Patch not enabled, skipping patch...");
 					goto CONTINUE;
 				}
 			}
