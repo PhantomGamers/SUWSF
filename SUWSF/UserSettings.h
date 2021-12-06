@@ -9,7 +9,7 @@ public:
 	{
 		int width, height;
 		float aspectratio;
-		bool isSet = false;
+		bool enabled = true;
 	};
 	static Config config;
 private:

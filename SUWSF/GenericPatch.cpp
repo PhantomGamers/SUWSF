@@ -19,9 +19,15 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 {
 	CIniReader ini(ININAME);
 
+	std::vector<Config> configs;
+	if (!UserSettings::config.enabled)
+	{
+		DBOUT("Patches disabled by UserSettings");
+		return configs;
+	}
+
 	DBOUT("Searching for patches...");
 
-	std::vector<Config> configs;
 	for (auto& entry : ini.data)
 	{
 		if (entry.first.find("Patch") == std::string::npos)

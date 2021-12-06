@@ -37,5 +37,6 @@ void UserSettings::SetConfig()
 	DBOUT("Detected width is " << config.width);
 	DBOUT("Detected height is " << config.height);
 	DBOUT("Detected aspect ratio is " << config.aspectratio);
-	config.isSet = true;
+
+	config.enabled = ini.ReadBoolean("UserSettings", "Enabled", true);
 }
