@@ -102,8 +102,9 @@ Default: "auto"
 
 If you get an error such as "Unable to load SUWSF.asi. Error:126", ensure you have the latest [64bit VC Redist](https://aka.ms/vs/17/release/vc_redist.x64.exe) or [32bit VC Redist](https://aka.ms/vs/17/release/vc_redist.x86.exe) installed depending on which version of SUWSF you are trying to use.
 
-If this does not work for you, verify that a file named `SUWSF.log` is being created when you launch the game.  
-If it is not, try renaming `dsound.dll` to `dinput8.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
+If this does not work for you, try renaming `dsound.dll` to `dinput8.dll` or any other name on [this list](https://github.com/ThirteenAG/Ultimate-ASI-Loader#description) and see if the problem remains.
+
+`version.dll` is a good alternative to try.
 
 ## Credits
 
