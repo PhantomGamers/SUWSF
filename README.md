@@ -90,6 +90,14 @@ Valid options: number of match (starting from 1), "last", "all"
 **Note that `last` might match different bytes than the last match in a hex editor.** This is because SUWSF works from memory while a hex editor works on the file on disk.  
 Default: "all"  
 
+
+#### **Module**
+
+Which file should be targeted by patch. Useful for cases where the patch needs to be applied to a file other than the main game executable. (e.g. "UnityPlayer.dll")  
+
+Valid options: "auto" (detects main game executable name), any string.  
+Default: "auto"  
+
 ## Troubleshooting
 
 If you get an error such as "Unable to load SUWSF.asi. Error:126", ensure you have the latest [64bit VC Redist](https://aka.ms/vs/17/release/vc_redist.x64.exe) or [32bit VC Redist](https://aka.ms/vs/17/release/vc_redist.x86.exe) installed depending on which version of SUWSF you are trying to use.
