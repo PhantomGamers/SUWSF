@@ -93,6 +93,11 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 					goto CONTINUE;
 				}
 			}
+			else if (params.first == "Module")
+			{
+				DBOUT("Module param found with value " << params.second);
+				config.module = params.second;
+			}
 		}
 		if (config.pattern.length() == 0)
 		{
@@ -149,6 +154,24 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 	for (auto& config : configs)
 	{
 		DBOUT("Searching for bytes " << config.pattern);
+		std::string moduleName;
+		if (config.module == "auto")
+		{
+			moduleName = szFileName;
+		}
+		else
+		{
+			moduleName = config.module;
+		}
+
+		mInfo = GetModuleInfo(const_cast<char*>(moduleName.c_str()));
+
+		if (mInfo.EntryPoint == nullptr)
+		{
+			DBOUT("Could not find module " << moduleName << ", skipping patch...");
+			continue;
+		}
+
 		auto pattern = hook::pattern((uintptr_t)mInfo.lpBaseOfDll, (uintptr_t)mInfo.lpBaseOfDll + mInfo.SizeOfImage, config.pattern);
 		DBOUT("Found " << pattern.size() << " matches");
 

@@ -14,6 +14,7 @@ private:
 		std::string val = "";
 		std::string valType = "float";
 		std::string matches = "all";
+		std::string module = "auto";
 	};
 	static std::vector<Config> GetConfigs();
 	static void PatchAll(std::vector<Config> configs);

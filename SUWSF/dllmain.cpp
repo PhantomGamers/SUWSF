@@ -16,7 +16,6 @@ void Init()
 	DBOUT(APPNAME << " " << VERSION << " INITIALIZED.");
 
 	GetModuleFileName(nullptr, szFileName, MAX_PATH);
-	mInfo = GetModuleInfo(szFileName);
 
 	UserSettings::Init();
 	GenericPatch::Init();
