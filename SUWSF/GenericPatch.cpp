@@ -48,7 +48,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			}
 			else if (params.first == "Offset")
 			{
-				DBOUT("Offset= " << params.second);
+				DBOUT("Offset=" << params.second);
 				try
 				{
 					config.offset = std::stoi(params.second);
@@ -86,7 +86,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			}
 			else if (params.first == "Enabled")
 			{
-				DBOUT("Enabled param found with value " << params.second);
+				DBOUT("Enabled=" << params.second);
 				if (params.second != "true")
 				{
 					DBOUT("Patch not enabled, skipping patch...");
@@ -95,7 +95,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			}
 			else if (params.first == "Module")
 			{
-				DBOUT("Module param found with value " << params.second);
+				DBOUT("Module=" << params.second);
 				config.module = params.second;
 			}
 		}
