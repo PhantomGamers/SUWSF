@@ -49,7 +49,6 @@ jobs:
       with:
         url: "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/latest/download/Ultimate-ASI-Loader_x64.zip"
         target: "."
-      run: 7z e Ultimate-ASI-Loader_x64.zip
 
     - name: Download Ultimate ASI Loader x86
       if: ${{ matrix.platform == 'x86' }}
@@ -57,12 +56,12 @@ jobs:
       with:
         url: "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/latest/download/Ultimate-ASI-Loader.zip"
         target: "."
-      run: 7z e Ultimate-ASI-Loader.zip
     
     - name: Prepare for release
       run: |
-        rm ${{ matrix.platform }}/Release/*.pdb
+        7z e Ultimate-ASI-Loader*.zip
         mv *.dll ${{ matrix.platform }}/Release/dsound.dll
+        rm ${{ matrix.platform }}/Release/*.pdb
         mv README.md ${{ matrix.platform }}/Release/
         mv LICENSE ${{ matrix.platform }}/Release/
         mv SUWSF.ini ${{ matrix.platform }}/Release/
