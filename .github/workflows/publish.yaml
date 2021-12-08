@@ -43,30 +43,29 @@ jobs:
         nuget restore SUWSF.sln
         msbuild SUWSF.sln -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:BUILDVERSION="${{ github.ref_name }}"
     
-    - name: Premake Ultimate ASI Loader
-      run: |
-        ./premake5.bat
-      working-directory: ./external/Ultimate-ASI-Loader
-
-    - name: Setup DXSDK
-      run: "$wc = New-Object System.Net.WebClient \nif (-not (Test-Path env:DXSDK_DIR)) \n{\n$wc.DownloadFile('https://download.microsoft.com/download/A/E/7/AE743F1F-632B-4809-87A9-AA1BB3458E31/DXSDK_Jun10.exe', 'C:\\DXSDK_Jun10.exe')\n$wc.DownloadFile('https://raw.githubusercontent.com/chocolatey/choco/master/src/chocolatey.resources/redirects/RefreshEnv.cmd', 'C:\\RefreshEnv.cmd')\nStart-Process \"C:\\DXSDK_Jun10.exe\" \"/F /S /O /U\" -NoNewWindow -Wait\nC:\\RefreshEnv.cmd\n}"
-
-    - name: Build Ultimate ASI Loader x64
+    - name: Download Ultimate ASI Loader x64
       if: ${{ matrix.platform == 'x64' }}
-      run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:Configuration=Release -p:Platform=${{ matrix.platform }} -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
+      uses: suisei-cn/actions-download-file@v1
+      with:
+        url: "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/latest/download/Ultimate-ASI-Loader_x64.zip"
+        target: "."
+      run: 7z e Ultimate-ASI-Loader_x64.zip
 
-    - name: Build Ultimate ASI Loader x86
+    - name: Download Ultimate ASI Loader x86
       if: ${{ matrix.platform == 'x86' }}
-      run: |
-        msbuild ./external/Ultimate-ASI-Loader/build/Ultimate-ASI-Loader-${{ matrix.platform }}.vcxproj -p:TargetName=dsound -p:OutDir="../../../${{ matrix.platform }}/Release" -p:PlatformToolset=v142
-
+      uses: suisei-cn/actions-download-file@v1
+      with:
+        url: "https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases/latest/download/Ultimate-ASI-Loader.zip"
+        target: "."
+      run: 7z e Ultimate-ASI-Loader.zip
+    
     - name: Prepare for release
       run: |
         rm ${{ matrix.platform }}/Release/*.pdb
-        copy README.md ${{ matrix.platform }}/Release/
-        copy LICENSE ${{ matrix.platform }}/Release/
-        copy SUWSF.ini ${{ matrix.platform }}/Release/
+        mv *.dll ${{ matrix.platform }}/Release/dsound.dll
+        mv README.md ${{ matrix.platform }}/Release/
+        mv LICENSE ${{ matrix.platform }}/Release/
+        mv SUWSF.ini ${{ matrix.platform }}/Release/
         7z a -tzip "SUWSF-${{ matrix.platform }}.zip" "./${{ matrix.platform }}/Release/*"
 
     - name: Create release
@@ -74,6 +73,3 @@ jobs:
       with:
         files: "SUWSF-${{ matrix.platform }}.zip"
         draft: true
-    
-
-    
