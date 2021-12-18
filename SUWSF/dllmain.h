@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <iomanip>
+#include <boost/algorithm/string/case_conv.hpp>
 
 #define STRINGIZER(arg)     #arg
 #define STR_VALUE(arg)      STRINGIZER(arg)
@@ -32,30 +34,28 @@ MODULEINFO GetModuleInfo(char* szModule)
 	return modinfo;
 }
 
-// modified, original from https://stackoverflow.com/a/3221193
-std::string HexFromString(const std::string& s)
+// from https://stackoverflow.com/a/3221193
+std::vector<unsigned char> BytesFromString(const std::string& s)
 {
 	std::istringstream hex_chars_stream(s);
-	std::string bytes;
+	std::vector<unsigned char> bytes;
 
 	unsigned int c;
 	while (hex_chars_stream >> std::hex >> c)
 	{
-		bytes += c;
+		bytes.push_back(c);
 	}
 	return bytes;
 }
 
-// from https://codereview.stackexchange.com/a/78539
-constexpr char hexmap[] = { '0', '1', '2', '3', '4', '5', '6', '7',
-						   '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-
-std::string hexStr(unsigned char* data, int len)
+// from https://stackoverflow.com/a/14051107
+std::string hexStr(BYTE* data, int len)
 {
-	std::string s(len * 2, ' ');
-	for (int i = 0; i < len; ++i) {
-		s[2 * i] = hexmap[(data[i] & 0xF0) >> 4];
-		s[2 * i + 1] = hexmap[data[i] & 0x0F];
-	}
-	return s;
+	std::stringstream ss;
+	ss << std::hex;
+
+	for (int i(0); i < len; ++i)
+		ss << std::setw(2) << std::setfill('0') << (int)data[i] << ' ';
+
+	return boost::to_upper_copy(ss.str());
 }

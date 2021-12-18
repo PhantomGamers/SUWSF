@@ -120,11 +120,8 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 					goto CONTINUE;
 				}
 
-				config.val = reinterpret_cast<char*>(reinterpret_cast<BYTE*>(&f));
-				while (config.val.size() > 4)
-				{
-					config.val.pop_back();
-				}
+				config.val = hexStr(reinterpret_cast<BYTE*>(&f), sizeof(float));
+				DBOUT("Value is " << config.val);
 			}
 			catch (std::exception const& e)
 			{
@@ -134,8 +131,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 		}
 		else if (config.valType == "byte")
 		{
-			config.val = HexFromString(config.val);
-			if (config.val.length() == 0)
+			if (BytesFromString(config.val).size() == 0)
 			{
 				DBOUT("Value could not be read as bytes, skipping patch...");
 				goto CONTINUE;
@@ -180,13 +176,13 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 			continue;
 		}
 
-		auto value = reinterpret_cast<BYTE*>(const_cast<char*>(config.val.c_str()));
+		auto value = BytesFromString(config.val);
 		if (config.matches == "all")
 		{
 			for (int i = 0; i < pattern.size(); i++)
 			{
-				DBOUT("Writing " << hexStr(value, config.val.length()) << " with length " << config.val.length() << " to result " << i + 1);
-				Memory::Write(pattern.get(i).get<BYTE>(config.offset), value, config.val.length());
+				DBOUT("Writing " << hexStr(value.data(), value.size()) << "with length " << value.size() << " to result " << i + 1);
+				Memory::Write(pattern.get(i).get<BYTE>(config.offset), value.data(), value.size());
 			}
 		}
 		else
@@ -215,8 +211,8 @@ void GenericPatch::PatchAll(std::vector<Config> configs)
 				continue;
 			}
 
-			DBOUT("Writing " << hexStr(value, config.val.length()) << " with length " << config.val.length() << " to match " << match);
-			Memory::Write(pattern.get(match - 1).get<BYTE>(config.offset), value, config.val.length());
+			DBOUT("Writing " << hexStr(value.data(), value.size()) << "with length " << value.size() << " to match " << match);
+			Memory::Write(pattern.get(match - 1).get<BYTE>(config.offset), value.data(), value.size());
 		}
 	}
 }
