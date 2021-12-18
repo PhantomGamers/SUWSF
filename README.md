@@ -79,7 +79,7 @@ Example:
 
 What type the Value setting contains.  
 
-Valid options: "float", "byte"  
+Valid options: "float", "int", "byte"  
 Default: `float`  
 
 #### **Match**
