@@ -73,7 +73,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			{
 				DBOUT("ValueType=" << params.second);
 				config.valType = params.second;
-				if (config.valType != "float" && config.valType != "byte")
+				if (config.valType != "float" && config.valType != "byte" && config.valType != "int")
 				{
 					DBOUT("ValueType unsupported. Supported types are: float, byte...Skipping patch...");
 					goto CONTINUE;
@@ -104,7 +104,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			DBOUT("No pattern found, skipping patch...");
 			goto CONTINUE;
 		}
-		if (config.valType == "float")
+		if (config.valType == "float" || config.valType == "int")
 		{
 			try
 			{
@@ -120,8 +120,15 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 					goto CONTINUE;
 				}
 
-				config.val = hexStr(reinterpret_cast<BYTE*>(&f), sizeof(float));
-				DBOUT("Value is " << config.val);
+				if (config.valType == "float")
+				{
+					config.val = hexStr(reinterpret_cast<BYTE*>(&f), sizeof(float));
+				}
+				else if (config.valType == "int")
+				{
+					int i = static_cast<int>(f);
+					config.val = hexStr(reinterpret_cast<BYTE*>(&i), sizeof(int));
+				}
 			}
 			catch (std::exception const& e)
 			{
