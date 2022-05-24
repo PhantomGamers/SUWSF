@@ -73,7 +73,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			{
 				DBOUT("ValueType=" << params.second);
 				config.valType = params.second;
-				if (config.valType != "float" && config.valType != "byte" && config.valType != "int")
+				if (config.valType != "float" && config.valType != "byte" && config.valType != "int" && config.valType != "double")
 				{
 					DBOUT("ValueType unsupported. Supported types are: float, byte...Skipping patch...");
 					goto CONTINUE;
@@ -104,7 +104,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			DBOUT("No pattern found, skipping patch...");
 			goto CONTINUE;
 		}
-		if (config.valType == "float" || config.valType == "int")
+		if (config.valType == "float" || config.valType == "int" || config.valType == "double")
 		{
 			try
 			{
@@ -112,7 +112,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 				boost::replace_all(config.val, "height", std::to_string(UserSettings::config.height));
 				boost::replace_all(config.val, "aspectratio", std::to_string(UserSettings::config.aspectratio));
 				int error = -1;
-				float f = te_interp(config.val.c_str(), &error);
+				double d = te_interp(config.val.c_str(), &error);
 
 				if (error != 0)
 				{
@@ -122,12 +122,17 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 
 				if (config.valType == "float")
 				{
+					float f = static_cast<float>(d);
 					config.val = hexStr(reinterpret_cast<BYTE*>(&f), sizeof(float));
 				}
 				else if (config.valType == "int")
 				{
-					int i = static_cast<int>(f);
+					int i = static_cast<int>(d);
 					config.val = hexStr(reinterpret_cast<BYTE*>(&i), sizeof(int));
+				}
+				else if (config.valType == "double")
+				{
+					config.val = hexStr(reinterpret_cast<BYTE*>(&d), sizeof(double));
 				}
 			}
 			catch (std::exception const& e)

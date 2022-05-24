@@ -8,7 +8,7 @@ public:
 	struct Config
 	{
 		int width, height;
-		float aspectratio;
+		double aspectratio;
 		bool enabled = true;
 	};
 	static Config config;

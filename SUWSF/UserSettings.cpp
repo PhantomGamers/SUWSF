@@ -33,7 +33,7 @@ void UserSettings::SetConfig()
 		config.width = std::stoi(resStrings.at(0));
 		config.height = std::stoi(resStrings.at(1));
 	}
-	config.aspectratio = (float)config.width / config.height;
+	config.aspectratio = (double)config.width / config.height;
 	DBOUT("Detected width is " << config.width);
 	DBOUT("Detected height is " << config.height);
 	DBOUT("Detected aspect ratio is " << config.aspectratio);
