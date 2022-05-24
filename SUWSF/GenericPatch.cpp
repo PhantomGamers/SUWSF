@@ -8,6 +8,7 @@
 #include <string>
 #include "../external/tinyexpr/tinyexpr.h"
 #include "../external/Hooking.Patterns/Hooking.Patterns.h"
+#include <boost/lexical_cast.hpp>
 
 void GenericPatch::Init()
 {
@@ -110,7 +111,7 @@ std::vector<GenericPatch::Config> GenericPatch::GetConfigs()
 			{
 				boost::replace_all(config.val, "width", std::to_string(UserSettings::config.width));
 				boost::replace_all(config.val, "height", std::to_string(UserSettings::config.height));
-				boost::replace_all(config.val, "aspectratio", std::to_string(UserSettings::config.aspectratio));
+				boost::replace_all(config.val, "aspectratio", boost::lexical_cast<std::string>(UserSettings::config.aspectratio));
 				int error = -1;
 				double d = te_interp(config.val.c_str(), &error);
 
