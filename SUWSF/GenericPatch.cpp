@@ -15,7 +15,6 @@ void GenericPatch::Init()
 {
 	DBOUT("Waiting for " << UserSettings::config.delayInSeconds << " seconds");
 	std::this_thread::sleep_for(std::chrono::seconds(UserSettings::config.delayInSeconds));
-	DBOUT("RUNNING NOW");
 
 	DBOUT("Initializing GenericPatch patches");
 	PatchAll(GetConfigs());

@@ -22,7 +22,6 @@ void Init()
 
 	if (UserSettings::config.createThread)
 	{
-		DBOUT("NEW THREAD!");
 		CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)&GenericPatch::Init, nullptr, NULL, nullptr);
 	}
 	else

@@ -43,5 +43,4 @@ void UserSettings::SetConfig()
 	config.createThread = ini.ReadBoolean("UserSettings", "CreateThread", config.createThread);
 	DBOUT("CreateThread " << config.createThread);
 	config.delayInSeconds = ini.ReadInteger("UserSettings", "DelayInSeconds", config.delayInSeconds);
-	DBOUT("Delay " << config.delayInSeconds);
 }
