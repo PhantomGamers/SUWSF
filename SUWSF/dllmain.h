@@ -10,14 +10,14 @@
 #include <iomanip>
 #include <boost/algorithm/string/case_conv.hpp>
 
-#define STRINGIZER(arg)     #arg
-#define STR_VALUE(arg)      STRINGIZER(arg)
-#define BUILD_VERSION_STRING STR_VALUE(BUILD_VERSION)
+#ifndef BUILD_VERSION
+#define BUILD_VERSION "DEV"
+#endif
 
 const std::string APPNAME("SUWSF");
 const std::string ININAME(APPNAME + ".ini");
 
-const std::string VERSION = BUILD_VERSION_STRING;
+const std::string VERSION = BUILD_VERSION;
 
 TCHAR szFileName[MAX_PATH];
 MODULEINFO mInfo;
