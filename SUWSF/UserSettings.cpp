@@ -38,5 +38,10 @@ void UserSettings::SetConfig()
 	DBOUT("Detected height is " << config.height);
 	DBOUT("Detected aspect ratio is " << config.aspectratio);
 
-	config.enabled = ini.ReadBoolean("UserSettings", "Enabled", true);
+	config.enabled = ini.ReadBoolean("UserSettings", "Enabled", config.enabled);
+
+	config.createThread = ini.ReadBoolean("UserSettings", "CreateThread", config.createThread);
+	DBOUT("CreateThread " << config.createThread);
+	config.delayInSeconds = ini.ReadInteger("UserSettings", "DelayInSeconds", config.delayInSeconds);
+	DBOUT("Delay " << config.delayInSeconds);
 }

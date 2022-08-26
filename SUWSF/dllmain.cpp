@@ -8,6 +8,7 @@
 #include "Logging.h"
 #include "UserSettings.h"
 #include "GenericPatch.h"
+#include <chrono>
 
 void Init()
 {
@@ -18,7 +19,16 @@ void Init()
 	GetModuleFileName(nullptr, szFileName, MAX_PATH);
 
 	UserSettings::Init();
-	GenericPatch::Init();
+
+	if (UserSettings::config.createThread)
+	{
+		DBOUT("NEW THREAD!");
+		CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)&GenericPatch::Init, nullptr, NULL, nullptr);
+	}
+	else
+	{
+		GenericPatch::Init();
+	}
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -29,7 +39,7 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)Init, nullptr, NULL, nullptr);
+		Init();
 		break;
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:

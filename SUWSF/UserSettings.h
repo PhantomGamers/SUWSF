@@ -10,6 +10,8 @@ public:
 		int width, height;
 		double aspectratio;
 		bool enabled = true;
+		bool createThread = true;
+		int delayInSeconds = 0;
 	};
 	static Config config;
 private:
